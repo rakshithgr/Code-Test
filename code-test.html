@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="code-test.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+</head>
+
+<body>
+  <div id="myData">
+
+  </div>
+  <script>
+    fetch('./json/code-test.json')
+      .then(response => response.json())
+      .then(data => appendData(data.articles))
+      .catch(error => console.log('im here err', error));
+    function appendData(data) {
+      var mainContainer = document.getElementById("myData");
+      for (var i = 0; i < data.length; i++) {
+        mainContainer.innerHTML += `
+            <div class="container">
+              <div class="image">
+                <a href="`+ data[i].link +`"><img src="`+ data[i].thumbnail.src +`" width="`+ data[i].thumbnail.width +`" height="`+ data[i].thumbnail.height +`"></a>
+              </div>
+              <div class="text">
+                <h4 class="category-text">`+data[i].primarySectionRouteName+`</h4>
+                <h2 class="heading-text">`+data[i].headline+`</h2>
+                <p class="stand-first-text">`+data[i].standfirst+`</p>
+              </div>
+            </div>`;
+            if(i+1 != data.length)
+            mainContainer.innerHTML += `<div class="divider"></div>`;
+      }
+    }
+  </script>
+</body>
+
+</html>
